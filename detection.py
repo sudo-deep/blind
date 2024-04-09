@@ -3,7 +3,13 @@ import cv2
 
 model = YOLO("yolov8s.pt")
 
-cap = cv2.VideoCapture(1)
+# cap = cv2.VideoCapture(1)
+URL = "http://192.168.0.30"
+cap = cv2.VideoCapture(URL + ":81/stream")
+
+
+def vibrate(frequency):
+    pass
 
 while cap.isOpened():
 
@@ -21,9 +27,9 @@ while cap.isOpened():
             print(area)
 
             # threshold: 200000 according to deepansh's laptop webcam
-            stage = "close" if area > 200000 else "far"
-            print(stage)
-
+            stage = "high" if area > 200000 else "off"
+            vibrate("high")
+            
             name = str(int(box.cls))
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 1)
             cv2.putText(frame, name, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
